@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sana Bir Sorum Var!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #ffe6e6; /* Tatlı bir pembe arka plan */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Buton dışarı taşmasın */
+        }
+
+        h1 {
+            color: #d63384;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        #evetBtn {
+            background-color: #28a745;
+            color: white;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+
+        #evetBtn:hover {
+            transform: scale(1.1);
+        }
+
+        #hayirBtn {
+            background-color: #dc3545;
+            color: white;
+            position: relative; /* Hareket edebilmesi için */
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1 id="mesaj">Yükleniyor...</h1>
+
+    <div class="buttons">
+        <button id="evetBtn" onclick="kabulEtti()">EVET</button>
+        <button id="hayirBtn" onmouseover="kac(this)" onclick="kac(this)">HAYIR</button>
+    </div>
+
+    <script>
+        // 1. URL'den mesajı çekme kısmı
+        function metniAyarla() {
+            const urlParametreleri = new URLSearchParams(window.location.search);
+            // URL'de ?s= kısmından sonrasını alır
+            const gelenMesaj = urlParametreleri.get('s');
+            
+            const baslik = document.getElementById('mesaj');
+
+            if (gelenMesaj) {
+                // Gelen metni başlığa yaz
+                baslik.innerText = gelenMesaj;
+            } else {
+                // Eğer URL boşsa varsayılan mesaj
+                baslik.innerText = "Benimle Evlenir misin?";
+            }
+        }
+
+        // 2. Hayır butonunun kaçma mantığı
+        function kac(buton) {
+            // Ekran genişliği ve yüksekliğini al
+            const genislik = window.innerWidth;
+            const yukseklik = window.innerHeight;
+
+            // Rastgele yeni pozisyon belirle (ekran sınırları içinde)
+            const yeniX = Math.random() * (genislik - 150);
+            const yeniY = Math.random() * (yukseklik - 150);
+
+            // Butonu "absolute" pozisyona alıp hareket ettiriyoruz
+            buton.style.position = "absolute";
+            buton.style.left = yeniX + "px";
+            buton.style.top = yeniY + "px";
+        }
+
+        // 3. Evet butonuna basınca olacaklar
+        function kabulEtti() {
+            document.body.innerHTML = `
+                <h1 style="font-size:4rem;">💖 BİLİYORDUM! 💖</h1>
+                <p style="font-size:1.5rem; color:#d63384;">Seni Seviyorum!</p>
+                <img src="https://media.giphy.com/media/T86i6yDyOYz7J6dPhf/giphy.gif" alt="Kalp" width="300">
+            `;
+            // Arka planı konfetili veya daha canlı yapabiliriz
+            document.body.style.backgroundColor = "#fff0f5";
+        }
+
+        // Sayfa açıldığında metni ayarla
+        metniAyarla();
+
+    </script>
+</body>
+</html>
